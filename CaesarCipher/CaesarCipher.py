@@ -1,3 +1,9 @@
+'''
+Author: Mason Hawver
+Description:
+This is a static Class with the purpose to replicate the caesar cipher in python code
+'''
+
 from Constants import Constants
 ALPHABET = Constants.ALPHABET
 
@@ -5,12 +11,16 @@ ALPHABET = Constants.ALPHABET
 class CaesarCipher:
 
     @staticmethod
+    # @message just give it a message you want to encrypt
+    # @shift that is the amount each letter is shifted (any int wil work as input)
     def encode(message, shift):
         encoded_message = ""
 
+        # note fixes shift input
         if shift > 26:
             shift = shift - (26 * int(shift/26))
 
+        # note: only encodes letters in alphabet
         for char in message:
             if char.lower() in Constants.ALPHABET:
                 encoded_alphabet_index = ALPHABET.find(char.lower()) + shift
@@ -27,9 +37,12 @@ class CaesarCipher:
             else:
                 encoded_message += char
 
+        # @ return gives encoded message
         return encoded_message
 
     @staticmethod
+    # @encoded_message give encoded message
+    # @shift give the shift you belive the message is encoded with
     def decode(encoded_message, shift):
         message = ""
 
@@ -48,9 +61,11 @@ class CaesarCipher:
             else:
                 message += char
 
+        # @return gives the message (note the shift may not be right)
         return message
 
     @staticmethod
+    # @encoded_message give encoded message no shift needed
     def brute_force(encoded_message):
         def find_letter_frequency(string):
 
@@ -82,5 +97,6 @@ class CaesarCipher:
         for message in sorted(possible_messages, key=possible_messages.__getitem__):
             sorted_possible_messages.update({message: possible_messages[message]})
 
+        # @return gives a dictionary sorted by there error(the error is the variation of letter frequency)
         return sorted_possible_messages
 
